@@ -1,17 +1,14 @@
-# Glamour Cosmetics — full-stack source
+<!-- # Glamour Cosmetics — full-stack source
 
-A real (non-demo) e-commerce site: an Express + Prisma REST API backend and a
-React (Vite) frontend that calls it over HTTP. No mock data lives in the
-frontend — every product, order, account and inquiry is read from and written
-to the database through the API.
 
-## Why you need to run this yourself
 
-This code was generated in a sandboxed environment with no outbound network
+<!-- ## Why you need to run this yourself -->
+
+<!-- This code was generated in a sandboxed environment with no outbound network
 access and no way to keep a server running after the chat ends, so it can't
-be hosted live from here. Running it takes about 5 minutes.
+be hosted live from here. Running it takes about 5 minutes. -->
 
-## 1. Backend setup
+<!-- ## 1. Backend setup
 
 ```bash
 cd backend
@@ -20,9 +17,9 @@ npm install
 npx prisma migrate dev --name init
 npm run seed                 # creates admin@glamour.com / admin123 + sample products
 npm run dev                  # API now running on http://localhost:4000
-```
+``` -->
 
-## 2. Frontend setup
+<!-- ## 2. Frontend setup
 
 In a second terminal:
 
@@ -31,8 +28,8 @@ cd frontend
 cp .env.example .env
 npm install
 npm run dev                  # site now running on http://localhost:5173
-```
-
+``` -->
+<!--
 Open http://localhost:5173 — sign up as a customer, or log in as
 `admin@glamour.com` / `admin123` to reach `/admin`.
 
@@ -49,9 +46,9 @@ Open http://localhost:5173 — sign up as a customer, or log in as
   and an order + order-items row is created.
 - **Admin dashboard**: add/remove products, see every order, change order
   status, and view inquiries — all hitting the real API with the admin's
-  JWT.
+  JWT. -->
 
-## Deploying it for real
+<!-- ## Deploying it for real
 
 - **Database**: swap `provider = "sqlite"` for `"postgresql"` in
   `backend/prisma/schema.prisma`, point `DATABASE_URL` at a hosted Postgres
@@ -68,9 +65,10 @@ Open http://localhost:5173 — sign up as a customer, or log in as
   under `backend/src/routes/auth.routes.js`, and point the frontend's
   "Continue with Google" button at that route.
 
-## Folder structure
+## Folder structure -->
 
-```
-backend/    Express API, Prisma schema + seed, JWT auth, admin middleware
+````
+<!-- backend/    Express API, Prisma schema + seed, JWT auth, admin middleware
 frontend/   React (Vite) app: pages, contexts (auth/cart), api.js client
-```
+``` --> -->
+````
