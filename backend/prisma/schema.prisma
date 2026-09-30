@@ -1,0 +1,67 @@
+// Switch provider to "postgresql" and set DATABASE_URL to a Postgres connection
+// string in production. SQLite is used here so the project runs with zero setup.
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("customer") // "customer" | "admin"
+  createdAt    DateTime @default(now())
+  orders       Order[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  category    String
+  price       Int
+  oldPrice    Int?
+  stock       Int      @default(0)
+  description String   @default("")
+  color       String   @default("#5A1F52")
+  imageUrl    String   @default("")
+  createdAt   DateTime @default(now())
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  userId        Int?
+  user          User?       @relation(fields: [userId], references: [id])
+  customerName  String
+  phone         String
+  address       String
+  paymentMethod String
+  status        String      @default("pending") // pending | paid | shipped | completed | cancelled
+  total         Int
+  createdAt     DateTime    @default(now())
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id          Int     @id @default(autoincrement())
+  orderId     Int
+  order       Order   @relation(fields: [orderId], references: [id])
+  productId   Int
+  product     Product @relation(fields: [productId], references: [id])
+  quantity    Int
+  priceAtSale Int
+}
+
+model Inquiry {
+  id        Int      @id @default(autoincrement())
+  name      String
+  contact   String
+  message   String
+  status    String   @default("open") // open | answered
+  createdAt DateTime @default(now())
+}
