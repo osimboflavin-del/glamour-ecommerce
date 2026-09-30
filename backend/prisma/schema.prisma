@@ -1,7 +1,7 @@
 // Switch provider to "postgresql" and set DATABASE_URL to a Postgres connection
 // string in production. SQLite is used here so the project runs with zero setup.
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
