@@ -51,6 +51,8 @@ const COLORS = [
   "#D9A6A0",
 ];
 
+color: COLORS[Math.floor(Math.random() * COLORS.length)];
+
 async function main() {
   const passwordHash = await bcrypt.hash("admin@2026", 10);
   await prisma.user.upsert({
