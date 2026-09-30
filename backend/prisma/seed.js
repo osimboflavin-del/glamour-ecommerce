@@ -58,7 +58,7 @@ async function main() {
     update: { passwordHash },
     create: {
       name: "Admin",
-      email: "glamourcosmetics.com",
+      email: "glamour@cosmetics.com",
       passwordHash,
       role: "admin",
     },
