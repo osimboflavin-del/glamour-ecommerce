@@ -1,46 +1,19 @@
 import { useEffect, useState } from "react";
-import { FastAverageColor } from "fast-average-color";
 import "./ShopHeroSlider.css";
 
-const fac = new FastAverageColor();
+const COLORS = ["#E8AFA6", "#7EB5A6", "#A8C0B0", "#D6D6D6", "#4A4A4A"];
 
 export default function ShopHeroSlider({ products }) {
   const [index, setIndex] = useState(0);
-  const [bgColors, setBgColors] = useState({});
-  const items = products.slice(0, 5);
 
-  // AUTO EXTRACT COLOR FROM IMAGE
-  useEffect(() => {
-    items.forEach(async (p) => {
-      const imgUrl = p.image || p.images?.[0];
-      if (!imgUrl || bgColors[imgUrl]) return;
-
-      try {
-        const color = await fac.getColorAsync(imgUrl, {
-          crossOrigin: "anonymous",
-        });
-        setBgColors((prev) => ({ ...prev, [imgUrl]: color.hex }));
-      } catch (e) {
-        // fallback if CORS blocks - use default colors
-        const fallbacks = [
-          "#E8AFA6",
-          "#7EB5A6",
-          "#A8C0B0",
-          "#D6D6D6",
-          "#4A4A4A",
-        ];
-        setBgColors((prev) => ({
-          ...prev,
-          [imgUrl]: fallbacks[Math.floor(Math.random() * fallbacks.length)],
-        }));
-      }
-    });
-  }, [products]);
+  // SAFE - never crash even if empty
+  const items = (products && products.length ? products : []).slice(0, 5);
 
   useEffect(() => {
+    if (!items.length) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % items.length);
-    }, 3500);
+    }, 3000);
     return () => clearInterval(interval);
   }, [items.length]);
 
@@ -48,22 +21,17 @@ export default function ShopHeroSlider({ products }) {
 
   return (
     <div className="slider-main">
-      {/* BACKGROUNDS WITH AUTO COLOR */}
       <div className="backgrounds">
-        {items.map((p, i) => {
-          const imgUrl = p.image || p.images?.[0];
-          const color = bgColors[imgUrl] || "#7CB686";
-          return (
-            <div
-              key={i}
-              className="background"
-              style={{
-                background: `radial-gradient(50% 50% at 50% 50%, ${color} 0%, ${color}CC 92.19%)`,
-                opacity: i === index ? 1 : 0,
-              }}
-            />
-          );
-        })}
+        {items.map((p, i) => (
+          <div
+            key={i}
+            className="background"
+            style={{
+              background: COLORS[i % COLORS.length],
+              opacity: i === index ? 1 : 0,
+            }}
+          />
+        ))}
       </div>
 
       <div className="container">
@@ -72,7 +40,7 @@ export default function ShopHeroSlider({ products }) {
             <div key={i} style={{ display: i === index ? "block" : "none" }}>
               <p className="logo-text">Glamour Collection</p>
               <h1 className="heading-style-2">{p.name}</h1>
-              <p className="desc">{p.description?.slice(0, 90)}...</p>
+              <p className="desc">{p.description?.slice(0, 80)}</p>
               <h3 className="price">KSh {p.price}</h3>
               <button className="shop-btn">Shop Now</button>
             </div>
@@ -89,10 +57,9 @@ export default function ShopHeroSlider({ products }) {
 
             return (
               <img
-                key={i}
-                src={p.image || p.images?.[0]}
+                key={p.id || i}
+                src={p.images?.[0] || p.image}
                 className={className}
-                crossOrigin="anonymous"
                 alt={p.name}
               />
             );
