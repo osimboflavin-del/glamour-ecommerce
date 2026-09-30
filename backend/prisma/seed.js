@@ -54,7 +54,7 @@ const COLORS = [
 async function main() {
   const passwordHash = await bcrypt.hash("admin@2026", 10);
   await prisma.user.upsert({
-    where: { email: "glamourcosmetics.com" },
+    where: { email: "glamour@cosmetics.com" },
     update: { passwordHash },
     create: {
       name: "Admin",
