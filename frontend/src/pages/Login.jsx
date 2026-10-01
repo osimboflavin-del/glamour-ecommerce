@@ -62,7 +62,7 @@ export default function Login() {
                 fontSize: "18px",
               }}
             >
-              {showPass ? "🙈" : "👁️"}
+              {showPass ? "👁️‍🗨️" : "👁️"}
             </span>
           </div>
         </div>
